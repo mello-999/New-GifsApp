@@ -3,6 +3,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
 
 
+
+
+
 interface MenuOption {
   icon: string;
   label: string;
@@ -32,6 +35,9 @@ export class SideMenuOptionsComponent {
     sublabel: 'Buscar gifs ',
     route: '/dashboard/search',
   },
+
+      
+
 
   ];
 
