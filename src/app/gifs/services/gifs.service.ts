@@ -38,8 +38,23 @@ const loadFromLocalStorage = () => {
     private http = inject(HttpClient)
 
 
-  trendingGifs = signal<Gif[]>([]);
+  trendingGifs = signal<Gif[]>([]); //[gif,gif,gif,gif,gif,gif,]
   trendingGifsLoading = signal(true);
+
+
+
+  // [ [gif,gif,gif,],[gif,gif,gif,],[gif,gif,gif,],[gif,gif,gif,] ]
+  tredingGifGroup = computed<Gif[][]>(() => {
+    const groups = [];
+    for ( let i = 0; i < this.trendingGifs().length; i +=3 ) {
+      groups.push( this.trendingGifs().slice(i, i + 3) );
+    }
+
+
+    console.log(groups);
+    return groups; //[ [g1,g2,g3],[g4,g5]]
+  })
+
 
   searchHistory = signal<Record<string, Gif[]>>(loadFromLocalStorage());
   searchHistoryKeys = computed(() => Object.keys(this.searchHistory()));
