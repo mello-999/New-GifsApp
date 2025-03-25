@@ -13,7 +13,7 @@ const GIF_KEY = 'gifs';
 const loadFromLocalStorage = () => {
    const gifsFromLocalStorage = localStorage.getItem(GIF_KEY) ?? '{}'; //Record<string, gifs[]>
    const gifs = JSON.parse(gifsFromLocalStorage);
-   console.log(gifs);
+
    return gifs;
 
 }
@@ -51,7 +51,7 @@ const loadFromLocalStorage = () => {
     }
 
 
-    console.log(groups);
+
     return groups; //[ [g1,g2,g3],[g4,g5]]
   })
 
@@ -85,7 +85,7 @@ const loadFromLocalStorage = () => {
       const gifs = GifMapper.mapGiphyItemsToGifArray(resp.data);
       this.trendingGifs.set(gifs);
       this.trendingGifsLoading.set(false);
-      console.log( gifs );
+
    });
 
   }
@@ -121,12 +121,12 @@ const loadFromLocalStorage = () => {
 
 getHistoryGifs( query: string):Gif[] {
   return this.searchHistory()[query] ?? [];
-}
 
 
 }
 
 
+}
 
 
 
