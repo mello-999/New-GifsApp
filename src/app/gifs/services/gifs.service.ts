@@ -39,8 +39,8 @@ const loadFromLocalStorage = () => {
 
 
   trendingGifs = signal<Gif[]>([]); //[gif,gif,gif,gif,gif,gif,]
-  trendingGifsLoading = signal(true);
-
+  trendingGifsLoading = signal(false);
+  private trendingPage = signal( 0 );
 
 
   // [ [gif,gif,gif,],[gif,gif,gif,],[gif,gif,gif,],[gif,gif,gif,] ]
@@ -74,16 +74,29 @@ const loadFromLocalStorage = () => {
 
 
     loadTrendingGifs() {
+
+          if ( this.trendingGifsLoading() ) return;
+
+          this.trendingGifsLoading.set(true);
+
      this.http.get<GiphyResponse>(`${ environment.giphyUrl }/gifs/trending`,{
       params: {
         api_key: environment.giphyapikey,
         limit: 20,
+        offset: this.trendingPage() * 20,
 
-    }
+    },
    })
    .subscribe ( (resp) => {
       const gifs = GifMapper.mapGiphyItemsToGifArray(resp.data);
-      this.trendingGifs.set(gifs);
+      this.trendingGifs.update( currentGifs => [
+        ...currentGifs,
+        ...gifs
+      ]);
+      this.trendingPage.update( (page) => page + 1)
+
+
+
       this.trendingGifsLoading.set(false);
 
    });
